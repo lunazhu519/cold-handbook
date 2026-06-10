@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="感冒手册">
+<title>家庭感冒手册</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f5f5f3;
+  --bg3: #efefec;
+  --text: #1a1a18;
+  --text2: #5a5a56;
+  --text3: #9a9a94;
+  --border: rgba(0,0,0,0.1);
+  --border2: rgba(0,0,0,0.18);
+  --blue: #185FA5;
+  --blue-bg: #E6F1FB;
+  --blue-border: #B5D4F4;
+  --green: #3B6D11;
+  --green-bg: #EAF3DE;
+  --green-border: #C0DD97;
+  --red: #A32D2D;
+  --red-bg: #FCEBEB;
+  --red-border: #F7C1C1;
+  --amber: #854F0B;
+  --amber-bg: #FAEEDA;
+  --amber-border: #FAC775;
+  --teal: #0F6E56;
+  --teal-bg: #E1F5EE;
+  --radius: 10px;
+  --radius-sm: 7px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1a;
+    --bg2: #272725;
+    --bg3: #323230;
+    --text: #f0f0ec;
+    --text2: #a8a8a2;
+    --text3: #686862;
+    --border: rgba(255,255,255,0.1);
+    --border2: rgba(255,255,255,0.18);
+    --blue: #85B7EB;
+    --blue-bg: #042C53;
+    --blue-border: #0C447C;
+    --green: #97C459;
+    --green-bg: #173404;
+    --green-border: #27500A;
+    --red: #F09595;
+    --red-bg: #501313;
+    --red-border: #791F1F;
+    --amber: #EF9F27;
+    --amber-bg: #412402;
+    --amber-border: #633806;
+    --teal: #5DCAA5;
+    --teal-bg: #04342C;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;padding-bottom:80px}
+.header{background:var(--bg);border-bottom:0.5px solid var(--border);padding:16px 16px 12px;position:sticky;top:0;z-index:100}
+.header h1{font-size:18px;font-weight:600;color:var(--text)}
+.header p{font-size:12px;color:var(--text3);margin-top:2px}
+.tab-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:0.5px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.tab-btn{flex:1;padding:10px 4px 8px;border:none;background:none;color:var(--text3);font-size:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color 0.15s}
+.tab-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab-btn.active{color:var(--blue)}
+.page{display:none;padding:12px 14px}
+.page.active{display:block}
+h2{font-size:16px;font-weight:600;color:var(--text);margin:16px 0 10px}
+h2:first-child{margin-top:4px}
+h3{font-size:13px;font-weight:600;color:var(--text);margin:14px 0 8px}
+p{font-size:13px;color:var(--text2);line-height:1.65}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px}
+.card-warn{border-left:3px solid #E24B4A;background:var(--red-bg);padding:10px 12px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:10px}
+.card-warn .ct{font-size:13px;font-weight:600;color:var(--red);margin-bottom:3px}
+.card-warn .cb{font-size:12px;color:var(--red)}
+.card-tip{border-left:3px solid #1D9E75;background:var(--green-bg);padding:10px 12px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:10px}
+.card-tip .ct{font-size:13px;font-weight:600;color:var(--green);margin-bottom:3px}
+.card-tip .cb{font-size:12px;color:var(--green)}
+.card-info{border-left:3px solid #378ADD;background:var(--blue-bg);padding:10px 12px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:10px}
+.card-info .ct{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:3px}
+.card-info .cb{font-size:12px;color:var(--blue)}
+.row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px;gap:8px}
+.row:last-child{border-bottom:none}
+.rl{color:var(--text2);flex:0 0 88px;font-size:12px}
+.rv{color:var(--text);text-align:right;flex:1;font-size:12px}
+.badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:20px;font-weight:500;margin-right:4px;margin-bottom:2px}
+.badge-r{background:var(--red-bg);color:var(--red)}
+.badge-y{background:var(--amber-bg);color:var(--amber)}
+.badge-g{background:var(--green-bg);color:var(--green)}
+.badge-b{background:var(--blue-bg);color:var(--blue)}
+.badge-t{background:var(--teal-bg);color:var(--teal)}
+.sub-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;-ms-overflow-style:none}
+.sub-tabs::-webkit-scrollbar{display:none}
+.sub-tab{padding:6px 14px;font-size:12px;border:0.5px solid var(--border2);border-radius:20px;background:var(--bg);color:var(--text2);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.sub-tab.active{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border)}
+.sub-page{display:none}
+.sub-page.active{display:block}
+.accordion-item{margin-bottom:6px}
+.accordion-btn{width:100%;text-align:left;padding:11px 14px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-size:13px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all 0.15s}
+.accordion-btn.open{border-radius:var(--radius-sm) var(--radius-sm) 0 0;border-bottom-color:transparent;background:var(--blue-bg);color:var(--blue)}
+.accordion-arrow{font-size:12px;transition:transform 0.2s;color:var(--text3)}
+.accordion-btn.open .accordion-arrow{transform:rotate(180deg)}
+.accordion-body{display:none;padding:10px 14px;background:var(--bg2);border:0.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:0}
+.accordion-body.open{display:block}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.compare-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px}
+.compare-card h4{font-size:13px;font-weight:600;margin-bottom:6px}
+.compare-card li{font-size:12px;color:var(--text2);margin-bottom:3px;list-style:none;padding-left:10px;position:relative}
+.compare-card li::before{content:"·";position:absolute;left:0}
+.pill-grid{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.pill{font-size:12px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--border);background:var(--bg2);color:var(--text2)}
+.checklist{list-style:none;padding:0;margin-bottom:10px}
+.checklist li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13px;color:var(--text);border-bottom:0.5px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.check-dot{width:16px;height:16px;border-radius:50%;background:var(--green-bg);border:1px solid var(--green-border);flex-shrink:0;margin-top:2px}
+.sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.sym-btn{padding:10px 8px;font-size:12px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;line-height:1.4}
+.sym-btn.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border);font-weight:500}
+.analyze-btn{width:100%;padding:13px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--blue);color:#fff;cursor:pointer;margin-bottom:14px;transition:opacity 0.15s}
+.analyze-btn:active{opacity:0.85}
+.result-box{margin-top:4px}
+input,textarea,select{width:100%;padding:10px 12px;font-size:14px;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);margin-bottom:10px;font-family:inherit;-webkit-appearance:none}
+textarea{min-height:72px;resize:vertical}
+label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-weight:500}
+.btn{padding:10px 16px;font-size:13px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);cursor:pointer;margin-right:8px;margin-bottom:8px;transition:opacity 0.15s}
+.btn:active{opacity:0.75}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-danger{background:var(--red-bg);color:var(--red);border-color:var(--red-border)}
+.btn-success{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.record-item{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px}
+.record-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.record-title{font-size:14px;font-weight:600;color:var(--text)}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:20px;line-height:1;padding:0 2px}
+.record-body p{font-size:12px;color:var(--text2);margin-bottom:4px;line-height:1.6}
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3)}
+.empty-state .icon{font-size:40px;margin-bottom:12px}
+.empty-state p{font-size:14px}
+.export-box{background:var(--bg2);border-radius:var(--radius-sm);padding:12px;font-size:11px;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow-y:auto;margin:8px 0 12px;color:var(--text2);border:0.5px solid var(--border);display:none}
+.form-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+.form-card h3{margin-top:0;margin-bottom:14px}
+.section-divider{height:8px;margin:4px -14px;background:var(--bg3)}
+.note-item{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px}
+.note-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.note-date{font-size:11px;color:var(--text3)}
+.note-text{font-size:13px;color:var(--text);line-height:1.65;white-space:pre-wrap}
+.sticky-new{position:sticky;top:64px;z-index:50;padding:8px 14px;background:var(--bg3);margin:0 -14px 4px;display:flex;justify-content:space-between;align-items:center}
+.sticky-new h2{margin:0}
+.copied-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.2s;pointer-events:none;z-index:200}
+.copied-toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>家庭感冒手册</h1>
+  <p>中西医对照 · 成人与儿童适用</p>
+</div>
+
+<div id="page-handbook" class="page active">
+  <div class="sub-tabs" id="hb-tabs">
+    <button class="sub-tab active" onclick="switchSub('hb','step1',this)">第一步判断</button>
+    <button class="sub-tab" onclick="switchSub('hb','stages',this)">进程阶段</button>
+    <button class="sub-tab" onclick="switchSub('hb','western',this)">西医实操</button>
+    <button class="sub-tab" onclick="switchSub('hb','tcm',this)">中医实操</button>
+    <button class="sub-tab" onclick="switchSub('hb','meds',this)">用药参考</button>
+    <button class="sub-tab" onclick="switchSub('hb','kids',this)">儿童专项</button>
+    <button class="sub-tab" onclick="switchSub('hb','qidef',this)">气虚调理</button>
+  </div>
+
+  <div id="hb-step1" class="sub-page active">
+    <h2>第一步：普通感冒 vs 流感</h2>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4 style="color:var(--blue)">普通感冒</h4>
+        <ul>
+          <li>慢慢发展</li>
+          <li>鼻子喉咙为主</li>
+          <li>低烧或无烧</li>
+          <li>轻微疲倦</li>
+          <li>7–10天自愈</li>
+        </ul>
+      </div>
+      <div class="compare-card" style="border-color:var(--red-border)">
+        <h4 style="color:var(--red)">流感</h4>
+        <ul>
+          <li>突然就垮了</li>
+          <li>全身症状重</li>
+          <li>高烧 &gt;38.5°C</li>
+          <li>极度疲倦</li>
+          <li>肌肉关节痛</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-warn">
+      <div class="ct">流感48小时内必须就医</div>
+      <div class="cb">奥司他韦（达菲）48小时内服用才有效。老人、小孩、孕妇、慢性病患者尽快就医。家中建议备三合一快测试纸（甲流/乙流/新冠）。</div>
+    </div>
+    <div class="card-info">
+      <div class="ct">甲流、乙流、新冠的关系</div>
+      <div class="cb">甲流乙流 = 流感病毒（A型/B型）。新冠 = 独立病毒，不属于流感，但症状相似，需快测区分。</div>
+    </div>
+    <h2>感冒 vs 过敏</h2>
+    <p style="margin-bottom:10px">过敏体质（高IgE/特应性皮炎）儿童适用</p>
+    <div class="card">
+      <div class="row"><span class="rl">眼睛</span><span class="rv">过敏：痒/红/流泪；感冒：正常</span></div>
+      <div class="row"><span class="rl">喷嚏</span><span class="rv">过敏：连续多个；感冒：零星</span></div>
+      <div class="row"><span class="rl">发烧</span><span class="rv">过敏：无；感冒：可能有</span></div>
+      <div class="row"><span class="rl">鼻涕</span><span class="rv">过敏：持续清水；感冒：会变稠</span></div>
+      <div class="row"><span class="rl">持续</span><span class="rv">过敏：接触原就发；感冒：7–10天自愈</span></div>
+    </div>
+  </div>
+
+  <div id="hb-stages" class="sub-page">
+    <h2>感冒进程五阶段</h2>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        <span><span class="badge badge-y">第0–1天</span> 信号期</span><span class="accordion-arrow">▾</span>
+      </button>
+      <div class="accordion-body">嗓子痒、莫名疲倦、轻微鼻痒。病毒刚进入，身体还没全面应战。<br><br><strong>最佳干预窗口，只有12–24小时。</strong><br><br>立刻做：早睡、姜糖水、泡脚出微汗、维C、保暖。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        <span><span class="badge badge-y">第1–2天</span> 刚开始</span><span class="accordion-arrow">▾</span>
+      </button>
+      <div class="accordion-body">开始流清水鼻涕、打喷嚏、轻微喉咙痛。症状轻但在发展。<br><br>继续非药物干预：盐水漱口、蒸汽吸入、大量喝温水。症状不影响生活不需要用药。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        <span><span class="badge badge-r">第2–4天</span> 高峰期</span><span class="accordion-arrow">▾</span>
+      </button>
+      <div class="accordion-body">鼻塞严重、鼻涕变稠、头重、可能低烧。最难受的阶段。<br><br>对症缓解为主。关注：发烧是否超38.5°C、症状是否持续加重而非减轻。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        <span><span class="badge badge-g">第5–7天</span> 转好期</span><span class="accordion-arrow">▾</span>
+      </button>
+      <div class="accordion-body">鼻涕减少、鼻塞缓解，残余咳嗽开始出现。<br><br>感染基本结束，重心转向咳嗽管理。咳嗽是最后离开的症状，可持续3–8周，不代表还有感染。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        <span><span class="badge badge-g">第7–10天</span> 收尾期</span><span class="accordion-arrow">▾</span>
+      </button>
+      <div class="accordion-body">基本恢复，偶有咳嗽。正常，不用担心。<br><br>如超过10天没好转，或第5天后症状反而加重，建议就医。</div>
+    </div>
+    <div class="card-warn" style="margin-top:14px">
+      <div class="ct">需要就医的信号</div>
+      <div class="cb">发烧39°C超3天 · 症状超10天无好转 · 耳痛或单侧面部痛 · 呼吸困难/胸痛 · 儿童呼吸费力/嘴唇发青</div>
+    </div>
+    <h2>鼻涕颜色速查</h2>
+    <div class="card">
+      <div class="row"><span class="rl">透明清水</span><span class="rv">感冒初期或过敏，正常</span></div>
+      <div class="row"><span class="rl">白色稀薄</span><span class="rv">风寒寒痰，继续观察</span></div>
+      <div class="row"><span class="rl">白色浓稠</span><span class="rv">感染中期，留意加重</span></div>
+      <div class="row"><span class="rl">黄色</span><span class="rv">免疫反应，不一定是细菌</span></div>
+      <div class="row"><span class="rl">黄绿浓稠</span><span class="rv">超5天未改善则就医</span></div>
+      <div class="row"><span class="rl">绿色</span><span class="rv">建议就医</span></div>
+      <div class="row"><span class="rl">带血丝</span><span class="rv">黏膜干燥，少量不担心</span></div>
+    </div>
+  </div>
+
+  <div id="hb-western" class="sub-page">
+    <h2>西医家庭实操</h2>
+    <h3>🟡 信号期（立刻做）</h3>
+    <ul class="checklist">
+      <li><span class="check-dot"></span>早睡，比平时提早1–2小时</li>
+      <li><span class="check-dot"></span>大量喝温水（补津液）</li>
+      <li><span class="check-dot"></span>淡盐水漱口，减少病毒在黏膜复制</li>
+      <li><span class="check-dot"></span>维C 500–1000mg（儿童100–250mg，吃猕猴桃橙子更好）</li>
+      <li><span class="check-dot"></span>保暖：脖子、腹部、脚踝；儿童用睡袋解决踢被子</li>
+    </ul>
+    <h3>🟠 高峰期（对症缓解）</h3>
+    <ul class="checklist">
+      <li><span class="check-dot"></span>热水澡蒸汽吸入（湿润鼻腔，帮助纤毛排毒）</li>
+      <li><span class="check-dot"></span>生理盐水鼻喷（鼻塞首选，安全无副作用）</li>
+      <li><span class="check-dot"></span>睡前一勺纯蜂蜜（1岁以上，止夜咳效果≈止咳糖浆）</li>
+      <li><span class="check-dot"></span>枕头垫高15–20度，减少鼻涕倒流引发夜咳</li>
+      <li><span class="check-dot"></span>加湿器保持室内湿度50–60%</li>
+    </ul>
+    <h3>洗澡注意事项</h3>
+    <div class="card">
+      <div class="row"><span class="rl">水温</span><span class="rv">热但不烫，微出汗即可</span></div>
+      <div class="row"><span class="rl">时间</span><span class="rv">10–15分钟，不宜过长</span></div>
+      <div class="row"><span class="rl">洗后</span><span class="rv">立刻擦干穿衣，头发吹干</span></div>
+      <div class="row"><span class="rl">禁忌</span><span class="rv">发烧38.5°C以上时不建议洗澡</span></div>
+    </div>
+    <h3>日常防护习惯</h3>
+    <div class="pill-grid">
+      <span class="pill">保证睡眠7+小时</span>
+      <span class="pill">每天户外活动</span>
+      <span class="pill">少糖饮食</span>
+      <span class="pill">勤洗手</span>
+      <span class="pill">换季加衣（脖子/腹部/脚踝）</span>
+      <span class="pill">备快测试纸</span>
+    </div>
+  </div>
+
+  <div id="hb-tcm" class="sub-page">
+    <h2>中医实操</h2>
+    <div class="card-info">
+      <div class="cb">中医核心逻辑：感冒是"外邪趁虚而入"，治疗方向是把邪气往外赶，而不是压制症状。<strong>方向比速度重要。</strong></div>
+    </div>
+    <h3>判断风寒 vs 风热</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4 style="color:var(--amber)">风寒</h4>
+        <ul>
+          <li>怕冷明显</li>
+          <li>鼻涕清水透明</li>
+          <li>喉咙痒不痛</li>
+          <li>不口渴</li>
+          <li>不出汗</li>
+          <li>受凉后发</li>
+        </ul>
+      </div>
+      <div class="compare-card" style="border-color:var(--red-border)">
+        <h4 style="color:var(--red)">风热</h4>
+        <ul>
+          <li>轻微怕冷</li>
+          <li>鼻涕黄/稠</li>
+          <li>喉咙红肿痛</li>
+          <li>想喝水</li>
+          <li>微微出汗</li>
+          <li>上火后发</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-warn">
+      <div class="ct">风寒期禁忌</div>
+      <div class="cb">不要吃：雪糕、冷饮、生梨、西瓜、板蓝根、金银花。寒凉食物会把寒气"锁"在里面，让感冒拖更久。</div>
+    </div>
+    <h3>风寒信号期黄金实操</h3>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)"><span>姜糖水</span><span class="accordion-arrow">▾</span></button>
+      <div class="accordion-body">老姜3–4片+红糖，煮10分钟，趁热喝，盖被子微微出汗。<br><br>儿童：姜少放，红糖多放，温热喝，微微发热即可。不需要大量出汗。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)"><span>泡脚出微汗</span><span class="accordion-arrow">▾</span></button>
+      <div class="accordion-body">热水（约42°C）加姜片，泡到脚踝以上，15–20分钟直到后背微微出汗。<br><br>儿童：水温略低，泡10分钟，睡前做效果最好。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)"><span>热敷背部</span><span class="accordion-arrow">▾</span></button>
+      <div class="accordion-body">热水袋敷肩胛骨中间（温肺化痰）和大椎穴（脖子后最突出骨头，驱寒）。每次10–15分钟。<br><br>整个病程都可以用。发烧38.5°C以上时暂停。热咳（黄痰）时不适合热敷。</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)"><span>晚间最优流程</span><span class="accordion-arrow">▾</span></button>
+      <div class="accordion-body">热水澡（10–15分钟）→ 趁热热敷背部（10–15分钟）→ 推拿/捏脊（10–20分钟）→ 睡觉。<br><br>全程保暖不吹风，45分钟内完成。洗完澡毛孔开着，热敷效果更深，捏脊时肌肉最松弛。</div>
+    </div>
+    <h3>寒咳 vs 热咳 食疗</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4 style="color:var(--amber)">寒咳（白痰）</h4>
+        <ul>
+          <li>烤橘子</li>
+          <li>陈皮水</li>
+          <li>姜汁蜂蜜水</li>
+          <li>蒸大蒜</li>
+          <li>白萝卜煮水</li>
+        </ul>
+      </div>
+      <div class="compare-card" style="border-color:var(--blue-border)">
+        <h4 style="color:var(--blue)">热咳（黄痰）</h4>
+        <ul>
+          <li>川贝炖梨</li>
+          <li>罗汉果茶</li>
+          <li>枇杷叶水</li>
+          <li>马蹄水</li>
+          <li>冰糖雪梨</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-tip">
+      <div class="ct">炖梨加蜂蜜（没有川贝也有效）</div>
+      <div class="cb">梨去核+蜂蜜隔水蒸15–20分钟，连汤带梨吃。风寒咳嗽可加几片姜同蒸，中和梨的寒性。</div>
+    </div>
+  </div>
+
+  <div id="hb-meds" class="sub-page">
+    <h2>用药参考</h2>
+    <div class="card-info">
+      <div class="cb">感冒药只缓解症状，不缩短病程。对症用药，有需要才用。</div>
+    </div>
+    <h3>西药对症速查</h3>
+    <div class="card">
+      <div class="row"><span class="rl">退烧/头痛</span><span class="rv">对乙酰氨基酚 / 布洛芬（不同时用）</span></div>
+      <div class="row"><span class="rl">鼻塞</span><span class="rv">生理盐水鼻喷（首选，无副作用）</span></div>
+      <div class="row"><span class="rl">流涕/喷嚏</span><span class="rv">氯苯那敏（有嗜睡，6岁以下慎用）</span></div>
+      <div class="row"><span class="rl">夜咳</span><span class="rv">蜂蜜首选 / 右美沙芬</span></div>
+      <div class="row"><span class="rl">流感专用</span><span class="rv">奥司他韦（48小时内，需就医）</span></div>
+      <div class="row"><span class="rl">抗生素</span><span class="rv">感冒无效，仅细菌并发症时用</span></div>
+    </div>
+    <h3>中成药对症速查</h3>
+    <div class="card">
+      <div class="row"><span class="rl">风寒感冒</span><span class="rv">荆防颗粒 / 感冒清热颗粒</span></div>
+      <div class="row"><span class="rl">风热感冒</span><span class="rv">银翘散 / 连花清瘟</span></div>
+      <div class="row"><span class="rl">暑湿感冒</span><span class="rv">藿香正气水</span></div>
+      <div class="row"><span class="rl">寒咳白痰</span><span class="rv">橘红颗粒 / 通宣理肺丸</span></div>
+      <div class="row"><span class="rl">热咳黄痰</span><span class="rv">川贝枇杷膏 / 蛇胆川贝液</span></div>
+      <div class="row"><span class="rl">儿童热咳</span><span class="rv">肺力咳合剂 / 小儿肺热咳喘颗粒</span></div>
+      <div class="row"><span class="rl">儿童寒咳</span><span class="rv">杏苏止咳颗粒</span></div>
+    </div>
+    <div class="card-warn">
+      <div class="ct">补药感冒期间全部停用</div>
+      <div class="cb">玉屏风散等所有补气药在感冒期间停服。中医说"补药留邪"，生病时补反而适得其反。</div>
+    </div>
+    <div class="card-warn">
+      <div class="ct">川贝枇杷膏≠万能止咳药</div>
+      <div class="cb">川贝枇杷膏是清热润肺药，只适合热咳（黄痰）。风寒咳嗽（白痰）用了会更难好。</div>
+    </div>
+  </div>
+
+  <div id="hb-kids" class="sub-page">
+    <h2>儿童专项</h2>
+    <div class="card-warn">
+      <div class="ct">6岁以下禁用复方感冒药</div>
+      <div class="cb">小儿氨酚黄那敏等复方药含多种成分，与泰诺/美林同时使用易造成对乙酰氨基酚过量伤肝。FDA不建议6岁以下使用。</div>
+    </div>
+    <h3>年龄限制速查</h3>
+    <div class="card">
+      <div class="row"><span class="rl">1岁以下</span><span class="rv">蜂蜜禁用（肉毒杆菌风险）</span></div>
+      <div class="row"><span class="rl">2岁以下</span><span class="rv">鼻腔只用生理盐水</span></div>
+      <div class="row"><span class="rl">6岁以下</span><span class="rv">不建议复方感冒药、抗组胺药</span></div>
+      <div class="row"><span class="rl">退烧药</span><span class="rv">泰诺林或美林按体重计算，不同时用</span></div>
+    </div>
+    <h3>儿童推拿（每晚睡前）</h3>
+    <div class="card">
+      <div class="row"><span class="rl">补脾经</span><span class="rv">拇指末节顺时针旋推 300次</span></div>
+      <div class="row"><span class="rl">补肺经</span><span class="rv">无名指末节顺时针旋推 200次</span></div>
+      <div class="row"><span class="rl">捏脊</span><span class="rv">尾骨→脖子捏起皮肤往上走 5遍</span></div>
+      <div class="row"><span class="rl">足三里</span><span class="rv">膝盖下四横指轻按揉 100次</span></div>
+    </div>
+    <div class="card-tip">
+      <div class="ct">坚持一个月见效</div>
+      <div class="cb">每晚睡前捏脊，对气虚体质、反复感冒效果明显。睡袋比穿袜子更实用，彻底解决踢被子问题。</div>
+    </div>
+    <h3>过敏体质儿童（高IgE / 特应性皮炎）</h3>
+    <div class="card">
+      <div class="row"><span class="rl">抗组胺药</span><span class="rv">若已在服用，感冒期间继续即可</span></div>
+      <div class="row"><span class="rl">注意叠加</span><span class="rv">不要再加复方感冒药中的抗组胺成分</span></div>
+      <div class="row"><span class="rl">湿疹加重</span><span class="rv">感冒期间正常现象，继续保湿护肤</span></div>
+    </div>
+  </div>
+
+  <div id="hb-qidef" class="sub-page">
+    <h2>气虚体质调理</h2>
+    <div class="card-info">
+      <div class="cb">气虚信号：容易疲倦、稍动就出汗、反复感冒、说话无力、面色偏白。调理需要数周到数月，方向对了坚持才有效。</div>
+    </div>
+    <h3>药补</h3>
+    <div class="card">
+      <div class="row"><span class="rl">玉屏风散</span><span class="rv">黄芪+白术+防风，补肺卫首选，健康时服1–2月</span></div>
+      <div class="row"><span class="rl">补中益气丸</span><span class="rv">气虚+疲倦+消化弱</span></div>
+      <div class="row"><span class="rl">参苓白术散</span><span class="rv">气虚+脾胃弱，适合儿童</span></div>
+      <div class="row"><span class="rl">生脉饮</span><span class="rv">气虚+多汗+心悸，夏天适合</span></div>
+    </div>
+    <h3>食补</h3>
+    <div class="card-tip">
+      <div class="ct">补气粥（每周3–4次）</div>
+      <div class="cb">黄芪10g + 山药一段 + 大枣3颗 + 糯米，煮粥早餐吃。儿童去黄芪，山药+大枣+糯米即可。</div>
+    </div>
+    <div class="pill-grid">
+      <span class="pill">山药（蒸/煮粥）</span>
+      <span class="pill">大枣（每天3–5颗）</span>
+      <span class="pill">黄芪（煲汤）</span>
+      <span class="pill">糯米粥</span>
+      <span class="pill">栗子（秋冬）</span>
+      <span class="pill">乌鸡汤</span>
+    </div>
+    <h3>运动</h3>
+    <div class="card-info">
+      <div class="cb">气虚者不适合高强度运动，目标是"微微出汗"。推荐：散步（每天30分钟）、八段锦、太极拳、舒缓瑜伽。儿童保证每天户外阳光活动即可。</div>
+    </div>
+    <h3>穴位按摩（每天可做）</h3>
+    <div class="card">
+      <div class="row"><span class="rl">足三里</span><span class="rv">膝盖下四横指，顺时针按揉100下，每天早上</span></div>
+      <div class="row"><span class="rl">搓大椎</span><span class="rv">脖子后最突出骨头，搓热，每天早上</span></div>
+      <div class="row"><span class="rl">摩腹</span><span class="rv">顺时针绕肚脐100圈，每晚睡前</span></div>
+    </div>
+    <div class="card-tip">
+      <div class="ct">艾灸在家可做</div>
+      <div class="cb">用艾条温灸足三里、气海（肚脐下1.5寸），每个穴位10–15分钟，每周2–3次，可替代针灸。</div>
+    </div>
+  </div>
+</div>
+
+<div id="page-checker" class="page">
+  <h2>症状自查</h2>
+  <p style="margin-bottom:14px">选择你现在的症状，获取初步判断。</p>
+  <div class="sym-grid" id="sym-grid">
+    <button class="sym-btn" data-sym="sudden" onclick="toggleSym(this)">突然就很难受</button>
+    <button class="sym-btn" data-sym="fever_high" onclick="toggleSym(this)">高烧 &gt;38.5°C</button>
+    <button class="sym-btn" data-sym="body_pain" onclick="toggleSym(this)">全身肌肉酸痛</button>
+    <button class="sym-btn" data-sym="extreme_tired" onclick="toggleSym(this)">极度疲倦</button>
+    <button class="sym-btn" data-sym="tired" onclick="toggleSym(this)">轻微疲倦</button>
+    <button class="sym-btn" data-sym="itchy_throat" onclick="toggleSym(this)">嗓子痒</button>
+    <button class="sym-btn" data-sym="sore_throat" onclick="toggleSym(this)">喉咙红肿痛</button>
+    <button class="sym-btn" data-sym="clear_runny" onclick="toggleSym(this)">清水鼻涕</button>
+    <button class="sym-btn" data-sym="yellow_runny" onclick="toggleSym(this)">黄绿鼻涕</button>
+    <button class="sym-btn" data-sym="stuffy" onclick="toggleSym(this)">鼻塞严重</button>
+    <button class="sym-btn" data-sym="sneeze" onclick="toggleSym(this)">打喷嚏多</button>
+    <button class="sym-btn" data-sym="chills" onclick="toggleSym(this)">明显怕冷</button>
+    <button class="sym-btn" data-sym="thirsty" onclick="toggleSym(this)">口渴想喝水</button>
+    <button class="sym-btn" data-sym="cough_white" onclick="toggleSym(this)">咳嗽白痰</button>
+    <button class="sym-btn" data-sym="cough_yellow" onclick="toggleSym(this)">咳嗽黄痰</button>
+    <button class="sym-btn" data-sym="eye_itch" onclick="toggleSym(this)">眼睛痒流泪</button>
+  </div>
+  <button class="analyze-btn" onclick="analyze()">分析症状</button>
+  <div id="result-box" class="result-box"></div>
+</div>
+
+<div id="page-records" class="page">
+  <div class="sticky-new">
+    <h2>感冒记录</h2>
+    <button class="btn btn-primary" id="new-btn" onclick="showForm()">+ 新记录</button>
+  </div>
+
+  <div id="record-form" style="display:none">
+    <div class="form-card">
+      <h3>记录这次感冒</h3>
+      <label>开始日期</label>
+      <input type="date" id="f-date">
+      <label>记录对象</label>
+      <select id="f-person">
+        <option value="自己">自己</option>
+        <option value="小朋友">小朋友</option>
+        <option value="全家">全家</option>
+      </select>
+      <label>类型判断</label>
+      <select id="f-type">
+        <option value="普通感冒·风寒">普通感冒 · 风寒</option>
+        <option value="普通感冒·风热">普通感冒 · 风热</option>
+        <option value="普通感冒·未判断">普通感冒 · 未判断</option>
+        <option value="流感/甲乙流">流感 / 甲乙流</option>
+        <option value="新冠">新冠</option>
+        <option value="不确定">不确定</option>
+      </select>
+      <label>主要症状</label>
+      <input type="text" id="f-symptoms" placeholder="如：嗓子痒→清涕→鼻塞→咳嗽…">
+      <label>做了哪些事（非药物）</label>
+      <textarea id="f-actions" placeholder="如：姜糖水、泡脚、热敷背部、早睡…"></textarea>
+      <label>吃了哪些药</label>
+      <textarea id="f-meds" placeholder="如：感冒清热颗粒第1–3天、维C…"></textarea>
+      <label>效果观察 / 总结</label>
+      <textarea id="f-notes" placeholder="如：第3天开始好转，这次没干预及时，下次信号期要马上泡脚…"></textarea>
+      <div>
+        <button class="btn btn-primary" onclick="saveRecord()">保存</button>
+        <button class="btn" onclick="hideForm()">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="records-list"></div>
+
+  <div id="export-section" style="display:none;margin-top:4px">
+    <button class="btn btn-success" onclick="exportRecords()">导出全部记录</button>
+    <button class="btn btn-danger" onclick="clearAll()">清空记录</button>
+    <div class="export-box" id="export-box"></div>
+  </div>
+</div>
+
+<div id="page-notes" class="page">
+  <h2>我的笔记</h2>
+  <p style="margin-bottom:12px">记录心得、发现、或给下次自己的提醒。</p>
+  <textarea id="note-input" placeholder="写下你的笔记…" style="min-height:100px"></textarea>
+  <button class="btn btn-primary" onclick="addNote()">保存笔记</button>
+  <div id="notes-list" style="margin-top:16px"></div>
+</div>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('handbook',this)">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    手册
+  </button>
+  <button class="tab-btn" onclick="switchTab('checker',this)">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+    自查
+  </button>
+  <button class="tab-btn" onclick="switchTab('records',this)">
+    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    记录
+  </button>
+  <button class="tab-btn" onclick="switchTab('notes',this)">
+    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    笔记
+  </button>
+</nav>
+
+<div class="copied-toast" id="toast">已复制到剪贴板</div>
+
+<script>
+const RKEY='cold_v2_records';
+const NKEY='cold_v2_notes';
+let syms=new Set();
+
+function switchTab(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='records')renderRecords();
+  if(name==='notes')renderNotes();
+}
+
+function switchSub(group,name,btn){
+  document.querySelectorAll('[id^="'+group+'-"]').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  document.querySelectorAll('#'+group+'-tabs .sub-tab').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(group+'-'+name);
+  el.classList.add('active');el.style.display='block';
+  btn.classList.add('active');
+}
+
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  btn.closest('.page,.sub-page').querySelectorAll('.accordion-body').forEach(b=>b.classList.remove('open'));
+  btn.closest('.page,.sub-page').querySelectorAll('.accordion-btn').forEach(b=>b.classList.remove('open'));
+  if(!open){body.classList.add('open');btn.classList.add('open');}
+}
+
+function toggleSym(btn){
+  const s=btn.dataset.sym;
+  if(syms.has(s)){syms.delete(s);btn.classList.remove('on');}
+  else{syms.add(s);btn.classList.add('on');}
+}
+
+function analyze(){
+  const s=syms;
+  if(s.size===0){document.getElementById('result-box').innerHTML='<div class="card-info"><div class="cb">请先选择至少一个症状。</div></div>';return;}
+  let html='';
+  const fluScore=[s.has('sudden'),s.has('fever_high'),s.has('body_pain'),s.has('extreme_tired')].filter(Boolean).length;
+  if(fluScore>=3){
+    html+=`<div class="card-warn"><div class="ct">⚠️ 可能是流感</div><div class="cb">症状符合流感特征（突发+高烧+全身痛）。建议48小时内就医，老人小孩孕妇尽快就医。</div></div>`;
+  } else if(s.has('eye_itch')&&s.has('sneeze')&&s.has('clear_runny')&&!s.has('fever_high')){
+    html+=`<div class="card-info"><div class="ct">可能是过敏发作</div><div class="cb">眼睛痒+连续喷嚏+清涕，无发烧，更像过敏。注意规避过敏原，若已有过敏用药继续服用。</div></div>`;
+  } else {
+    let stage='';
+    if(s.has('tired')&&!s.has('stuffy')&&!s.has('clear_runny')&&!s.has('yellow_runny')){
+      stage=`<span class="badge badge-y">信号期</span> 最佳干预窗口，立刻行动！`;
+    } else if((s.has('clear_runny')||s.has('itchy_throat'))&&!s.has('stuffy')){
+      stage=`<span class="badge badge-y">刚开始</span> 继续非药物干预为主`;
+    } else if(s.has('stuffy')){
+      stage=`<span class="badge badge-r">高峰期</span> 对症缓解，注意休息`;
+    } else if(s.has('cough_white')||s.has('cough_yellow')){
+      stage=`<span class="badge badge-g">转好期</span> 感染基本结束，重心转向咳嗽`;
+    }
+    html+=`<div class="card"><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">普通感冒</div><div style="font-size:13px;color:var(--text2)">${stage}</div></div>`;
+
+    const windCold=s.has('chills')&&(s.has('clear_runny')||s.has('itchy_throat'))&&!s.has('thirsty')&&!s.has('sore_throat');
+    const windHeat=(s.has('sore_throat')||s.has('yellow_runny'))&&(s.has('thirsty')||!s.has('chills'));
+    if(windCold){
+      html+=`<div class="card"><div style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:4px">风寒可能性高</div><div style="font-size:12px;color:var(--text2)">姜糖水、泡脚、热敷背部。忌生冷寒凉、板蓝根。<br>中成药：感冒清热颗粒 / 荆防颗粒</div></div>`;
+    } else if(windHeat){
+      html+=`<div class="card"><div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:4px">风热可能性高</div><div style="font-size:12px;color:var(--text2)">多喝水、清淡饮食、罗汉果茶。忌辛辣温热。<br>中成药：银翘散 / 连花清瘟</div></div>`;
+    } else {
+      html+=`<div class="card-info"><div class="cb">寒热未明，建议观察一天再判断。多喝温水、早睡、保暖是通用原则。</div></div>`;
+    }
+    if(s.has('cough_white')){html+=`<div class="card-tip"><div class="ct">寒咳（白痰）处理</div><div class="cb">烤橘子、陈皮水、热敷背部。中成药：橘红颗粒 / 通宣理肺丸</div></div>`;}
+    if(s.has('cough_yellow')){html+=`<div class="card-tip"><div class="ct">热咳（黄痰）处理</div><div class="cb">川贝炖梨、罗汉果茶、枇杷叶水。中成药：川贝枇杷膏 / 蛇胆川贝液</div></div>`;}
+  }
+  document.getElementById('result-box').innerHTML=html;
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function load(key){try{return JSON.parse(localStorage.getItem(key)||'[]');}catch(e){return[];}}
+function save(key,data){localStorage.setItem(key,JSON.stringify(data));}
+
+function showForm(){
+  document.getElementById('record-form').style.display='block';
+  document.getElementById('new-btn').style.display='none';
+  document.getElementById('f-date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('record-form').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function hideForm(){
+  document.getElementById('record-form').style.display='none';
+  document.getElementById('new-btn').style.display='block';
+}
+
+function saveRecord(){
+  const rec={
+    id:Date.now(),
+    date:document.getElementById('f-date').value||new Date().toISOString().slice(0,10),
+    person:document.getElementById('f-person').value,
+    type:document.getElementById('f-type').value,
+    symptoms:document.getElementById('f-symptoms').value.trim(),
+    actions:document.getElementById('f-actions').value.trim(),
+    meds:document.getElementById('f-meds').value.trim(),
+    notes:document.getElementById('f-notes').value.trim()
+  };
+  const records=load(RKEY);
+  records.unshift(rec);
+  save(RKEY,records);
+  ['f-symptoms','f-actions','f-meds','f-notes'].forEach(id=>document.getElementById(id).value='');
+  hideForm();
+  renderRecords();
+  showToast('记录已保存');
+}
+
+function renderRecords(){
+  const records=load(RKEY);
+  const list=document.getElementById('records-list');
+  const exp=document.getElementById('export-section');
+  if(records.length===0){
+    list.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>还没有记录<br>点击"新记录"开始追踪</p></div>';
+    exp.style.display='none';return;
+  }
+  exp.style.display='block';
+  list.innerHTML=records.map(r=>`
+    <div class="record-item">
+      <div class="record-header">
+        <span class="record-title">${r.date} · ${r.person}</span>
+        <button class="del-btn" onclick="deleteRecord(${r.id})">×</button>
+      </div>
+      <span class="badge badge-b">${r.type}</span>
+      <div class="record-body" style="margin-top:8px">
+        ${r.symptoms?`<p><strong>症状：</strong>${r.symptoms}</p>`:''}
+        ${r.actions?`<p><strong>处理：</strong>${r.actions}</p>`:''}
+        ${r.meds?`<p><strong>用药：</strong>${r.meds}</p>`:''}
+        ${r.notes?`<p><strong>观察：</strong>${r.notes}</p>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function deleteRecord(id){
+  if(!confirm('删除这条记录？'))return;
+  const records=load(RKEY).filter(r=>r.id!==id);
+  save(RKEY,records);renderRecords();
+}
+
+function exportRecords(){
+  const records=load(RKEY);
+  if(records.length===0){showToast('没有记录可导出');return;}
+  const text='家庭感冒记录\n导出时间：'+new Date().toLocaleDateString('zh-CN')+'\n\n'+
+    records.map(r=>[
+      `日期：${r.date}　人物：${r.person}　类型：${r.type}`,
+      r.symptoms?`症状：${r.symptoms}`:'',
+      r.actions?`处理：${r.actions}`:'',
+      r.meds?`用药：${r.meds}`:'',
+      r.notes?`观察：${r.notes}`:'','---'
+    ].filter(Boolean).join('\n')).join('\n');
+  const box=document.getElementById('export-box');
+  box.style.display='block';box.textContent=text;
+  navigator.clipboard.writeText(text).then(()=>showToast('已复制到剪贴板')).catch(()=>showToast('请手动复制上方文字'));
+}
+
+function clearAll(){
+  if(!confirm('确定清空所有感冒记录？此操作不可恢复。'))return;
+  localStorage.removeItem(RKEY);renderRecords();showToast('记录已清空');
+}
+
+function addNote(){
+  const input=document.getElementById('note-input');
+  const text=input.value.trim();
+  if(!text)return;
+  const notes=load(NKEY);
+  notes.unshift({id:Date.now(),text,date:new Date().toLocaleDateString('zh-CN')});
+  save(NKEY,notes);input.value='';renderNotes();showToast('笔记已保存');
+}
+
+function renderNotes(){
+  const notes=load(NKEY);
+  const list=document.getElementById('notes-list');
+  if(notes.length===0){list.innerHTML='<div class="empty-state"><div class="icon">✏️</div><p>还没有笔记</p></div>';return;}
+  list.innerHTML=notes.map(n=>`
+    <div class="note-item">
+      <div class="note-meta">
+        <span class="note-date">${n.date}</span>
+        <button class="del-btn" onclick="deleteNote(${n.id})">×</button>
+      </div>
+      <div class="note-text">${n.text}</div>
+    </div>`).join('');
+}
+
+function deleteNote(id){
+  const notes=load(NKEY).filter(n=>n.id!==id);
+  save(NKEY,notes);renderNotes();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+</script>
+</body>
+</html>

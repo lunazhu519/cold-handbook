@@ -66,7 +66,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .header h1{font-size:18px;font-weight:600;color:var(--text)}
 .header p{font-size:12px;color:var(--text3);margin-top:2px}
 .tab-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:0.5px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
-.tab-btn{flex:1;padding:10px 4px 8px;border:none;background:none;color:var(--text3);font-size:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color 0.15s}
+.tab-btn{flex:1;padding:10px 4px 8px;border:none;background:none;color:var(--text3);font-size:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color 0.1s}
 .tab-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tab-btn.active{color:var(--blue)}
 .page{display:none;padding:12px 14px}
@@ -102,11 +102,11 @@ p{font-size:13px;color:var(--text2);line-height:1.65}
 .sub-page{display:none}
 .sub-page.active{display:block}
 .accordion-item{margin-bottom:6px}
-.accordion-btn{width:100%;text-align:left;padding:11px 14px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-size:13px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all 0.15s}
+.accordion-btn{width:100%;text-align:left;padding:11px 14px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-size:13px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all 0.2s}
 .accordion-btn.open{border-radius:var(--radius-sm) var(--radius-sm) 0 0;border-bottom-color:transparent;background:var(--blue-bg);color:var(--blue)}
 .accordion-arrow{font-size:12px;transition:transform 0.2s;color:var(--text3)}
 .accordion-btn.open .accordion-arrow{transform:rotate(180deg)}
-.accordion-body{display:none;padding:10px 14px;background:var(--bg2);border:0.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:0}
+.accordion-body{display:none;padding:10px 14px;background:var(--bg2);border:0.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);font-size:13px;color:var(--text2);line-height:1.65}
 .accordion-body.open{display:block}
 .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .compare-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px}
@@ -120,15 +120,15 @@ p{font-size:13px;color:var(--text2);line-height:1.65}
 .checklist li:last-child{border-bottom:none}
 .check-dot{width:16px;height:16px;border-radius:50%;background:var(--green-bg);border:1px solid var(--green-border);flex-shrink:0;margin-top:2px}
 .sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
-.sym-btn{padding:10px 8px;font-size:12px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;line-height:1.4}
+.sym-btn{padding:10px 8px;font-size:12px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text2);cursor:pointer;text-align:center;transition:all 0.2s}
 .sym-btn.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border);font-weight:500}
-.analyze-btn{width:100%;padding:13px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--blue);color:#fff;cursor:pointer;margin-bottom:14px;transition:opacity 0.15s}
+.analyze-btn{width:100%;padding:13px;font-size:14px;font-weight:600;border:none;border-radius:var(--radius);background:var(--blue);color:#fff;cursor:pointer;margin-bottom:14px;transition:opacity 0.2s}
 .analyze-btn:active{opacity:0.85}
 .result-box{margin-top:4px}
-input,textarea,select{width:100%;padding:10px 12px;font-size:14px;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);margin-bottom:10px;font-family:inherit;-webkit-appearance:none}
+input,textarea,select{width:100%;padding:10px 12px;font-size:14px;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);margin-bottom:10px;font-family:inherit}
 textarea{min-height:72px;resize:vertical}
 label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-weight:500}
-.btn{padding:10px 16px;font-size:13px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);cursor:pointer;margin-right:8px;margin-bottom:8px;transition:opacity 0.15s}
+.btn{padding:10px 16px;font-size:13px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);cursor:pointer;margin-right:8px;margin-bottom:8px;transition:all 0.2s}
 .btn:active{opacity:0.75}
 .btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
 .btn-danger{background:var(--red-bg);color:var(--red);border-color:var(--red-border)}
@@ -141,7 +141,7 @@ label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-wei
 .empty-state{text-align:center;padding:48px 20px;color:var(--text3)}
 .empty-state .icon{font-size:40px;margin-bottom:12px}
 .empty-state p{font-size:14px}
-.export-box{background:var(--bg2);border-radius:var(--radius-sm);padding:12px;font-size:11px;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow-y:auto;margin:8px 0 12px;color:var(--text2);border:0.5px solid var(--border);display:none}
+.export-box{background:var(--bg2);border-radius:var(--radius-sm);padding:12px;font-size:11px;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow-y:auto;margin-bottom:10px}
 .form-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px}
 .form-card h3{margin-top:0;margin-bottom:14px}
 .section-divider{height:8px;margin:4px -14px;background:var(--bg3)}
@@ -151,7 +151,7 @@ label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-wei
 .note-text{font-size:13px;color:var(--text);line-height:1.65;white-space:pre-wrap}
 .sticky-new{position:sticky;top:64px;z-index:50;padding:8px 14px;background:var(--bg3);margin:0 -14px 4px;display:flex;justify-content:space-between;align-items:center}
 .sticky-new h2{margin:0}
-.copied-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.2s;pointer-events:none;z-index:200}
+.copied-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.2s;pointer-events:none}
 .copied-toast.show{opacity:1}
 </style>
 </head>
@@ -222,25 +222,25 @@ label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-wei
       <button class="accordion-btn" onclick="toggleAcc(this)">
         <span><span class="badge badge-y">第0–1天</span> 信号期</span><span class="accordion-arrow">▾</span>
       </button>
-      <div class="accordion-body">嗓子痒、莫名疲倦、轻微鼻痒。病毒刚进入，身体还没全面应战。<br><br><strong>最佳干预窗口，只有12–24小时。</strong><br><br>立刻做：早睡、姜糖水、泡脚出微汗、维C、保暖。</div>
+      <div class="accordion-body">嗓子痒、莫名疲倦、轻微鼻痒。病毒刚进入，身体还没全面应战。<br><br><strong>最佳干预窗口，只有12–24小时。</strong><br><br>立刻：早睡、喝温水、盐水漱口、维C、保暖。中医："上工治未病"，防胜于治。</div>
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)">
         <span><span class="badge badge-y">第1–2天</span> 刚开始</span><span class="accordion-arrow">▾</span>
       </button>
-      <div class="accordion-body">开始流清水鼻涕、打喷嚏、轻微喉咙痛。症状轻但在发展。<br><br>继续非药物干预：盐水漱口、蒸汽吸入、大量喝温水。症状不影响生活不需要用药。</div>
+      <div class="accordion-body">开始流清水鼻涕、打喷嚏、轻微喉咙痛。症状轻但在发展。<br><br>继续非药物干预：盐水漱口、蒸汽吸入、大量喝温水。症状轻微，暂不用感冒药。</div>
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)">
         <span><span class="badge badge-r">第2–4天</span> 高峰期</span><span class="accordion-arrow">▾</span>
       </button>
-      <div class="accordion-body">鼻塞严重、鼻涕变稠、头重、可能低烧。最难受的阶段。<br><br>对症缓解为主。关注：发烧是否超38.5°C、症状是否持续加重而非减轻。</div>
+      <div class="accordion-body">鼻塞严重、鼻涕变稠、头重、可能低烧。最难受的阶段。<br><br>对症缓解为主。关注：发烧是否超38.5°C、症状是否持续加重、是否出现一侧耳痛。</div>
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)">
         <span><span class="badge badge-g">第5–7天</span> 转好期</span><span class="accordion-arrow">▾</span>
       </button>
-      <div class="accordion-body">鼻涕减少、鼻塞缓解，残余咳嗽开始出现。<br><br>感染基本结束，重心转向咳嗽管理。咳嗽是最后离开的症状，可持续3–8周，不代表还有感染。</div>
+      <div class="accordion-body">鼻涕减少、鼻塞缓解，残余咳嗽开始出现。<br><br>感染基本结束，重心转向咳嗽管理。咳嗽是最后离开的症状，可持续3–8周。</div>
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)">
@@ -337,7 +337,7 @@ label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-wei
     <h3>风寒信号期黄金实操</h3>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)"><span>姜糖水</span><span class="accordion-arrow">▾</span></button>
-      <div class="accordion-body">老姜3–4片+红糖，煮10分钟，趁热喝，盖被子微微出汗。<br><br>儿童：姜少放，红糖多放，温热喝，微微发热即可。不需要大量出汗。</div>
+      <div class="accordion-body">老姜3–4片+红糖，煮10分钟，趁热喝，盖被子微微出汗。<br><br>儿童：姜少放，红糖多放，温热喝，微微发热即可。不需要出汗。</div>
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)"><span>泡脚出微汗</span><span class="accordion-arrow">▾</span></button>
@@ -345,11 +345,11 @@ label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-wei
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)"><span>热敷背部</span><span class="accordion-arrow">▾</span></button>
-      <div class="accordion-body">热水袋敷肩胛骨中间（温肺化痰）和大椎穴（脖子后最突出骨头，驱寒）。每次10–15分钟。<br><br>整个病程都可以用。发烧38.5°C以上时暂停。热咳（黄痰）时不适合热敷。</div>
+      <div class="accordion-body">热水袋敷肩胛骨中间（温肺化痰）和大椎穴（脖子后最突出骨头，驱寒）。每次10–15分钟。<br><br>整个病程都可以用。发烧时不用。</div>
     </div>
     <div class="accordion-item">
       <button class="accordion-btn" onclick="toggleAcc(this)"><span>晚间最优流程</span><span class="accordion-arrow">▾</span></button>
-      <div class="accordion-body">热水澡（10–15分钟）→ 趁热热敷背部（10–15分钟）→ 推拿/捏脊（10–20分钟）→ 睡觉。<br><br>全程保暖不吹风，45分钟内完成。洗完澡毛孔开着，热敷效果更深，捏脊时肌肉最松弛。</div>
+      <div class="accordion-body">热水澡（10–15分钟）→ 趁热热敷背部（10–15分钟）→ 推拿/捏脊（10–20分钟）→ 睡觉。<br><br>全程保暖不吹风，45分钟内就寝，效果最好。</div>
     </div>
     <h3>寒咳 vs 热咳 食疗</h3>
     <div class="compare-grid">
@@ -473,7 +473,7 @@ label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-wei
     </div>
     <h3>运动</h3>
     <div class="card-info">
-      <div class="cb">气虚者不适合高强度运动，目标是"微微出汗"。推荐：散步（每天30分钟）、八段锦、太极拳、舒缓瑜伽。儿童保证每天户外阳光活动即可。</div>
+      <div class="cb">气虚者不适合高强度运动，目标是"微微出汗"。推荐：散步（每天30分钟）、八段锦、太极拳、舒缓瑜伽。儿童保证每天户外阳光活动。</div>
     </div>
     <h3>穴位按摩（每天可做）</h3>
     <div class="card">
@@ -602,6 +602,18 @@ function switchTab(name,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
+  
+  // 修复：点击"手册"时重置到第一个子章节
+  if(name==='handbook'){
+    const tabs=document.querySelectorAll('#hb-tabs .sub-tab');
+    const pages=document.querySelectorAll('[id^="hb-"]');
+    tabs.forEach((t,i)=>t.classList.toggle('active',i===0));
+    pages.forEach((p,i)=>{
+      p.classList.toggle('active',i===0);
+      p.style.display=i===0?'block':'none';
+    });
+  }
+  
   if(name==='records')renderRecords();
   if(name==='notes')renderNotes();
 }
@@ -634,9 +646,9 @@ function analyze(){
   let html='';
   const fluScore=[s.has('sudden'),s.has('fever_high'),s.has('body_pain'),s.has('extreme_tired')].filter(Boolean).length;
   if(fluScore>=3){
-    html+=`<div class="card-warn"><div class="ct">⚠️ 可能是流感</div><div class="cb">症状符合流感特征（突发+高烧+全身痛）。建议48小时内就医，老人小孩孕妇尽快就医。</div></div>`;
+    html+=`<div class="card-warn"><div class="ct">⚠️ 可能是流感</div><div class="cb">症状符合流感特征（突发+高烧+全身痛）。建议48小时内就医，老人小孩孕妇优先。</div></div>`;
   } else if(s.has('eye_itch')&&s.has('sneeze')&&s.has('clear_runny')&&!s.has('fever_high')){
-    html+=`<div class="card-info"><div class="ct">可能是过敏发作</div><div class="cb">眼睛痒+连续喷嚏+清涕，无发烧，更像过敏。注意规避过敏原，若已有过敏用药继续服用。</div></div>`;
+    html+=`<div class="card-info"><div class="ct">可能是过敏发作</div><div class="cb">眼睛痒+连续喷嚏+清涕，无发烧，更像过敏。注意规避过敏原，若已有过敏用药继续即可。</div></div>`;
   } else {
     let stage='';
     if(s.has('tired')&&!s.has('stuffy')&&!s.has('clear_runny')&&!s.has('yellow_runny')){
@@ -653,14 +665,14 @@ function analyze(){
     const windCold=s.has('chills')&&(s.has('clear_runny')||s.has('itchy_throat'))&&!s.has('thirsty')&&!s.has('sore_throat');
     const windHeat=(s.has('sore_throat')||s.has('yellow_runny'))&&(s.has('thirsty')||!s.has('chills'));
     if(windCold){
-      html+=`<div class="card"><div style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:4px">风寒可能性高</div><div style="font-size:12px;color:var(--text2)">姜糖水、泡脚、热敷背部。忌生冷寒凉、板蓝根。<br>中成药：感冒清热颗粒 / 荆防颗粒</div></div>`;
+      html+=`<div class="card"><div style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:4px">风寒可能性高</div><div style="font-size:12px;color:var(--text2)">姜糖水、泡脚出微汗、热敷背部（参考手册"中医实操"）。</div></div>`;
     } else if(windHeat){
-      html+=`<div class="card"><div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:4px">风热可能性高</div><div style="font-size:12px;color:var(--text2)">多喝水、清淡饮食、罗汉果茶。忌辛辣温热。<br>中成药：银翘散 / 连花清瘟</div></div>`;
+      html+=`<div class="card"><div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:4px">风热可能性高</div><div style="font-size:12px;color:var(--text2)">多喝水、少穿衣、避免冷风。可用银翘散/连花清瘟。</div></div>`;
     } else {
       html+=`<div class="card-info"><div class="cb">寒热未明，建议观察一天再判断。多喝温水、早睡、保暖是通用原则。</div></div>`;
     }
-    if(s.has('cough_white')){html+=`<div class="card-tip"><div class="ct">寒咳（白痰）处理</div><div class="cb">烤橘子、陈皮水、热敷背部。中成药：橘红颗粒 / 通宣理肺丸</div></div>`;}
-    if(s.has('cough_yellow')){html+=`<div class="card-tip"><div class="ct">热咳（黄痰）处理</div><div class="cb">川贝炖梨、罗汉果茶、枇杷叶水。中成药：川贝枇杷膏 / 蛇胆川贝液</div></div>`;}
+    if(s.has('cough_white')){html+=`<div class="card-tip"><div class="ct">寒咳（白痰）处理</div><div class="cb">烤橘子、陈皮水、热敷背部。中成药：橘红颗粒 / 通宣理肺丸。</div></div>`;}
+    if(s.has('cough_yellow')){html+=`<div class="card-tip"><div class="ct">热咳（黄痰）处理</div><div class="cb">川贝炖梨、罗汉果茶、枇杷叶水。中成药：川贝枇杷膏 / 蛇胆川贝液。</div></div>`;}
   }
   document.getElementById('result-box').innerHTML=html;
   document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'nearest'});
